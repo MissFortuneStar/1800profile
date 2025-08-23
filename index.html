@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Profile with Neon & Rain</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: url("https://dl.dropboxusercontent.com/scl/fi/qiz4657mo8050mc98xi01/IMG_7453.jpeg?dl=0") no-repeat center/cover fixed;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex; justify-content: center; padding: 2rem; min-height: 100vh; position: relative;
+    }
+    body::before {
+      content:""; position:absolute; inset:0;
+      background: rgba(0,0,0,0.6); z-index:0;
+    }
+    /* Rain effect */
+    .rain { position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:1; pointer-events:none; }
+    .rain div { position:absolute; bottom:100%; width:2px; height:15px; background:rgba(255,255,255,0.2); animation: fall linear infinite; }
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+    .profile-container {
+      position: relative; z-index:2;
+      background: #111; border-radius:12px; padding:2rem;
+      max-width:800px; width:100%; text-align:center;
+      box-shadow:0 0 20px rgba(255,255,255,0.2);
+    }
+    h1 {
+      font-size:2.5rem; color:#fff;
+      text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 20px #fff,0 0 30px #fff;
+      animation: flicker 3s infinite alternate;
+      margin-bottom:0.5rem;
+    }
+    @keyframes flicker {
+      0%,18%,22%,25%,53%,57%,100%{opacity:1;}
+      20%,24%,55%{opacity:0.4;}
+    }
+    .person-info { color:#ccc; font-size:1rem; margin-bottom:1.5rem; line-height:1.6; }
+    .person-info p { margin:0.3rem 0; }
+    .avatar {
+      width:140px; height:140px; border-radius:50%;
+      border:3px solid #fff; box-shadow:0 0 15px #fff;
+      object-fit:cover; margin:0 auto 1rem;
+    }
+    .socials a {
+      color:#fff; font-size:1.5rem; width:45px; height:45px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border:2px solid #fff; border-radius:50%;
+      margin:0 0.5rem; text-decoration:none;
+      box-shadow:0 0 5px #fff; transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .socials a:hover { transform:scale(1.2); box-shadow:0 0 15px #fff; }
+
+    .slider { position:relative; overflow:hidden; margin:1.5rem 0; }
+    .slides { display:flex; transition:transform 0.6s ease; }
+    .slide-img {
+      width:100%; flex-shrink:0; max-height:400px; object-fit:cover;
+      border: 4px solid #fff; box-shadow: 0 0 10px #fff;
+    }
+    .slider button {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(255,255,255,0.1); border:none;
+      color:#fff; font-size:2rem; padding:0.5rem;
+      cursor:pointer; border-radius:50%; box-shadow:0 0 5px #fff;
+      transition:background 0.3s, box-shadow 0.3s;
+    }
+    .slider button:hover { background:rgba(255,255,255,0.3); box-shadow:0 0 15px #fff; }
+    .prev { left:10px; } .next { right:10px; }
+
+    #music-control {
+      position:fixed; right:1rem; bottom:1rem;
+      background:rgba(255,255,255,0.1); border:none;
+      color:#fff; font-size:1.5rem; padding:0.5rem; border-radius:50%;
+      box-shadow:0 0 5px #fff; cursor:pointer;
+      transition:background 0.3s;
+      z-index:2;
+    }
+    #music-control:hover { background:rgba(255,255,255,0.3); }
+
+    .waveform {
+      position:fixed; bottom:0; left:50%; width:80%; height:18px;
+      transform:translateX(-50%);
+      display:flex; justify-content:space-around;
+      z-index:2;
+    }
+    .waveform div {
+      background:#fff; width:4px; height:8px;
+      animation: wave 1s ease-in-out infinite;
+    }
+    @keyframes wave { 0%,100%{height:8px;} 50%{height:24px;} }
+  </style>
+</head>
+<body>
+  <div class="rain"></div>
+  <div class="profile-container">
+    <img src="avatar.jpg" alt="Avatar" class="avatar">
+    <h1>Tên Của Bạn</h1>
+    <div class="person-info">
+      <p><strong>Vị trí/Công việc:</strong> [Chức danh]</p>
+      <p><strong>Về mình:</strong> [Giới thiệu ngắn]</p>
+      <p><strong>Liên hệ:</strong> email@example.com</p>
+    </div>
+    <div class="socials">
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+    <div class="slider">
+      <div class="slides">
+        <img class="slide-img" src="fav1.jpg" alt="Yêu thích 1">
+        <img class="slide-img" src="fav2.jpg" alt="Yêu thích 2">
+        <img class="slide-img" src="fav3.jpg" alt="Yêu thích 3">
+        <img class="slide-img" src="fav4.jpg" alt="Yêu thích 4">
+        <img class="slide-img" src="fav5.jpg" alt="Yêu thích 5">
+      </div>
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+  </div>
+
+  <audio id="bgm" src="chillwave.mp3" autoplay loop muted></audio>
+  <button id="music-control">🔇</button>
+  <div class="waveform">
+    <div style="animation-delay:0s;"></div>
+    <div style="animation-delay:0.1s;"></div>
+    <div style="animation-delay:0.2s;"></div>
+    <div style="animation-delay:0.3s;"></div>
+    <div style="animation-delay:0.4s;"></div>
+    <div style="animation-delay:0.5s;"></div>
+    <div style="animation-delay:0.6s;"></div>
+    <div style="animation-delay:0.7s;"></div>
+    <div style="animation-delay:0.8s;"></div>
+    <div style="animation-delay:0.9s;"></div>
+  </div>
+
+  <script>
+    // tạo mưa
+    const rainContainer = document.querySelector('.rain');
+    for (let i = 0; i < 80; i++) {
+      const drop = document.createElement('div');
+      drop.style.left = Math.random()*100 + 'vw';
+      drop.style.animationDuration = 0.5 + Math.random()*0.5 + 's';
+      drop.style.animationDelay = Math.random()*2 + 's';
+      rainContainer.appendChild(drop);
+    }
+
+    // slider
+    const slides = document.querySelector('.slides');
+    const total = slides.children.length;
+    let index = 0;
+    document.querySelector('.prev').onclick = () => { index=(index-1+total)%total; slides.style.transform=`translateX(-${index*100}%)`; };
+    document.querySelector('.next').onclick = () => { index=(index+1)%total; slides.style.transform=`translateX(-${index*100}%)`; };
+
+    // music control
+    const btn = document.getElementById('music-control');
+    const audio = document.getElementById('bgm');
+    btn.onclick = () => { audio.muted=!audio.muted; btn.textContent=audio.muted?'🔇':'🔊'; };
+  </script>
+</body>
+</html>
