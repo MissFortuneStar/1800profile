@@ -1,163 +1,308 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>1800 profile</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: url("IMG_7453.jpeg") no-repeat center/cover fixed;
-      color: #eee;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex; justify-content: center; padding: 2rem; min-height: 100vh; position: relative;
-    }
-    body::before {
-      content:""; position:absolute; inset:0;
-      background: rgba(0,0,0,0.6); z-index:0;
-    }
-    /* Rain effect */
-    .rain { position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:1; pointer-events:none; }
-    .rain div { position:absolute; bottom:100%; width:2px; height:15px; background:rgba(255,255,255,0.2); animation: fall linear infinite; }
-    @keyframes fall {
-      to { transform: translateY(110vh); }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelynn Serverside Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body styling for dark theme and centering */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
 
-    .profile-container {
-      position: relative; z-index:2;
-      background: #111; border-radius:12px; padding:2rem;
-      max-width:800px; width:100%; text-align:center;
-      box-shadow:0 0 20px rgba(255,255,255,0.2);
-    }
-    h1 {
-      font-size:2.5rem; color:#fff;
-      text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 20px #fff,0 0 30px #fff;
-      animation: flicker 3s infinite alternate;
-      margin-bottom:0.5rem;
-    }
-    @keyframes flicker {
-      0%,18%,22%,25%,53%,57%,100%{opacity:1;}
-      20%,24%,55%{opacity:0.4;}
-    }
-    .person-info { color:#ccc; font-size:1rem; margin-bottom:1.5rem; line-height:1.6; }
-    .person-info p { margin:0.3rem 0; }
-    .avatar {
-      width:140px; height:140px; border-radius:50%;
-      border:3px solid #fff; box-shadow:0 0 15px #fff;
-      object-fit:cover; margin:0 auto 1rem;
-    }
-    .socials a {
-      color:#fff; font-size:1.5rem; width:45px; height:45px;
-      display:inline-flex; align-items:center; justify-content:center;
-      border:2px solid #fff; border-radius:50%;
-      margin:0 0.5rem; text-decoration:none;
-      box-shadow:0 0 5px #fff; transition:transform 0.3s, box-shadow 0.3s;
-    }
-    .socials a:hover { transform:scale(1.2); box-shadow:0 0 15px #fff; }
+        /* Styling for the main content card */
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            max-width: 480px;
+            width: 100%;
+            padding: 2rem;
+        }
 
-    .slider { position:relative; overflow:hidden; margin:1.5rem 0; }
-    .slides { display:flex; transition:transform 0.6s ease; }
-    .slide-img {
-      width:100%; flex-shrink:0; max-height:400px; object-fit:cover;
-      border: 4px solid #fff; box-shadow: 0 0 10px #fff;
-    }
-    .slider button {
-      position:absolute; top:50%; transform:translateY(-50%);
-      background:rgba(255,255,255,0.1); border:none;
-      color:#fff; font-size:2rem; padding:0.5rem;
-      cursor:pointer; border-radius:50%; box-shadow:0 0 5px #fff;
-      transition:background 0.3s, box-shadow 0.3s;
-    }
-    .slider button:hover { background:rgba(255,255,255,0.3); box-shadow:0 0 15px #fff; }
-    .prev { left:10px; } .next { right:10px; }
+        /* Styling for all input fields */
+        .input-field {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
 
-    #music-control {
-      position:fixed; right:1rem; bottom:1rem;
-      background:rgba(255,255,255,0.1); border:none;
-      color:#fff; font-size:1.5rem; padding:0.5rem; border-radius:50%;
-      box-shadow:0 0 5px #fff; cursor:pointer;
-      transition:background 0.3s;
-      z-index:2;
-    }
-    #music-control:hover { background:rgba(255,255,255,0.3); }
+        /* Focus state for input fields */
+        .input-field:focus {
+            border-color: #6366f1; /* indigo-500 */
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+        }
 
-    .waveform {
-      position:fixed; bottom:0; left:50%; width:80%; height:18px;
-      transform:translateX(-50%);
-      display:flex; justify-content:space-around;
-      z-index:2;
-    }
-    .waveform div {
-      background:#fff; width:4px; height:8px;
-      animation: wave 1s ease-in-out infinite;
-    }
-    @keyframes wave { 0%,100%{height:8px;} 50%{height:24px;} }
-  </style>
+        /* Styling for payment method radio button labels */
+        .payment-method-label {
+            background-color: #2a2a2a;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        
+        /* Hover effect for payment method labels */
+        .payment-method-label:hover {
+            background-color: #2c2c2c;
+        }
+
+        /* Checked state for payment method radio buttons */
+        input[type="radio"]:checked + .payment-method-label {
+            background-color: #3f3f46; /* zinc-700 */
+            border-color: #6366f1; /* indigo-500 */
+        }
+        
+        /* Styling for the purchase button */
+        .purchase-button {
+            background-color: #6366f1;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Hover effect for the purchase button */
+        .purchase-button:hover {
+            background-color: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        /* General icon styling */
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Specific icon colors */
+        .credit-card-icon { fill: #e0e0e0; }
+        .paypal-icon { fill: #0070ba; }
+        .apple-pay-icon { fill: #a2aaad; }
+        .google-pay-icon { fill: #4285f4; }
+
+        /* Utility class to hide elements */
+        .hidden { display: none; }
+        
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Loading spinner animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 </head>
 <body>
-  <div class="rain"></div>
-  <div class="profile-container">
-    <img src="IMG_7450.jpeg" alt="Avatar" class="avatar">
-    <h1>1800</h1>
-    <div class="person-info">
-      <p><strong>Depression</strong></p>
+    <div class="card">
+        <h1 class="text-3xl font-bold text-center text-white mb-2">Evelynn Serverside Premium</h1>
+        <p class="text-center text-sm text-gray-400 mb-8">Upgrade your gaming experience with unlimited access and exclusive features.</p>
+        
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <p class="text-sm text-gray-400">Subscription plan</p>
+            <p class="text-2xl font-bold text-white mt-1">Monthly Plan</p>
+            <p class="text-4xl font-extrabold text-indigo-500 mt-2">$19.99<span class="text-lg text-gray-400 font-normal">/month</span></p>
+        </div>
+
+        <form id="purchase-form">
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label for="discord-id" class="block text-sm font-medium text-gray-400 mb-1">Discord ID</label>
+                    <input type="text" id="discord-id" placeholder="E.g., username#1234" class="input-field" required>
+                </div>
+            </div>
+
+            <h2 class="text-lg font-semibold text-white mb-4">Select Payment Method</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <!-- Credit Card option -->
+                <div>
+                    <input type="radio" id="credit-card" name="payment-method" value="Credit Card" class="hidden" checked>
+                    <label for="credit-card" class="payment-method-label">
+                        <svg class="icon credit-card-icon" viewBox="0 0 24 24"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-1 14H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1Zm0-6H4V6h16v6Z"/><path d="M8 12h8v2H8z"/></svg>
+                        <span>Credit Card</span>
+                    </label>
+                </div>
+                <!-- PayPal option -->
+                <div>
+                    <input type="radio" id="paypal" name="payment-method" value="PayPal" class="hidden">
+                    <label for="paypal" class="payment-method-label">
+                        <svg class="icon paypal-icon" viewBox="0 0 24 24"><path d="M12.92 14.86c-.4-.05-.8-.11-1.21-.18-1.5-.24-2.88-.69-4.14-1.35-1.12-.58-2.14-1.3-2.9-2.2-.68-.8-.85-1.74-.8-2.73.06-1.07.41-2.1 1.05-3.05.58-.87 1.3-1.6 2.15-2.2.7-.5 1.5-.9 2.37-1.16 1.05-.3 2.14-.44 3.25-.4 1.4.05 2.76.32 4.07.82 1.15.45 2.2 1.05 3.12 1.83.9.76 1.63 1.65 2.22 2.65.6 1 1 2.05 1.25 3.13.2 1 .25 2.02.13 3.03-.1 1.04-.42 2.05-.9 3.02-.45.89-.98 1.73-1.63 2.5-.58.68-1.22 1.3-1.95 1.84-1.24.9-2.72 1.57-4.32 1.95-1.8.42-3.66.52-5.5.3-.9-.1-1.78-.28-2.65-.54-.86-.27-1.7-.6-2.48-.98-.77-.4-1.5-.88-2.17-1.44-.66-.55-1.25-1.15-1.77-1.8-.46-.57-.86-1.22-1.17-1.93-.33-.74-.53-1.54-.6-2.38-.06-.85-.02-1.7-.1-2.55h4.15c.16.8.25 1.63.4 2.45.17.9.4 1.76.7 2.58.3.8.7 1.53 1.14 2.23.44.7 1 1.35 1.6 1.95.6.6 1.25 1.1 1.96 1.55.7.45 1.46.85 2.25 1.15.8.3 1.6.5 2.44.57 1.05.1 2.1-.02 3.1-.28.95-.25 1.85-.6 2.7-1.05.8-.43 1.53-.94 2.2-1.54.66-.6 1.2-1.3 1.65-2.05.42-.72.7-1.48.9-2.28.16-.7.25-1.4.3-2.13.06-.8.02-1.6.1-2.4h-4.22c-.15.8-.25 1.6-.4 2.4-.17.9-.4 1.7-.7 2.5-.3.8-.7 1.5-1.15 2.2-.44.68-.96 1.3-1.57 1.86-.6.55-1.24 1.05-1.93 1.5-.7.42-1.45.8-2.22 1.1-.77.3-1.58.5-2.4.6-.9.1-1.75.02-2.6-.2-.8-.2-1.5-.5-2.2-.84-.66-.35-1.26-.75-1.8-1.2-.55-.45-1-1-1.4-1.6-.37-.5-.65-1.07-.88-1.66-.2-.55-.3-1.15-.35-1.76-.04-.6-.02-1.2.1-1.8.08-.6.2-1.2.4-1.8.2-.6.4-1.2.65-1.8.26-.57.54-1.1.88-1.6.3-.5.7-1 1.1-1.4.45-.4 1-.74 1.57-.98.57-.25 1.18-.45 1.8-.57.6-.14 1.2-.23 1.85-.28 1.1-.06 2.1-.06 3.2-.2Z"/></svg>
+                        <span>PayPal</span>
+                    </label>
+                </div>
+                <!-- Apple Pay option -->
+                <div>
+                    <input type="radio" id="apple-pay" name="payment-method" value="Apple Pay" class="hidden">
+                    <label for="apple-pay" class="payment-method-label">
+                        <svg class="icon apple-pay-icon" viewBox="0 0 24 24"><path d="M12 1.66c-.95 0-1.7.75-1.7 1.7s.75 1.7 1.7 1.7 1.7-.75 1.7-1.7-.75-1.7-1.7-1.7Z"/><path d="M12 5.06c-1.35 0-2.45-1.1-2.45-2.45S10.65.16 12 .16s2.45 1.1 2.45 2.45-1.1 2.45-2.45 2.45ZM21.92 14.5c.2.06.32.22.4.45-.1.14-.3.26-.45.38a1.5 1.5 0 0 1-1.56.24c-.75-.24-1.5-.4-2.2-.5-1.65-.24-3.2-.55-4.66-.9a.78.78 0 0 1-.5-.64c.05-.2.12-.4.2-.6.22-.55.48-1.1.75-1.65.4-.8.78-1.62 1.1-2.47a.9.9 0 0 1 .8-.5c.2-.05.4-.04.6-.04.5.1 1.05.2 1.6.32.7.15 1.4.3 2.1.5a1.5 1.5 0 0 0 1.25-.45 2.4 2.4 0 0 0 .5-.65c.1-.2.2-.4.26-.6.04-.1.06-.2.1-.3-.2.1-.42.2-.6.3-1.1.58-2.35.8-3.6.9-.9.1-1.8.1-2.7-.04-1-.1-2-.25-2.9-.4-.7-.14-1.3-.32-2-.52-.3-.1-.6-.2-.9-.3-.15-.05-.3-.02-.4.08-.2.2-.3.4-.3.6a.7.7 0 0 0 .1.4c.1.2.2.4.35.6.35.6.7 1.18 1.05 1.7.6.9 1.2 1.8 1.8 2.7.7.9 1.45 1.75 2.3 2.5a3.1 3.1 0 0 0 2.2 1c.5-.02 1-.1 1.5-.2.7-.12 1.4-.3 2.1-.5.7-.2 1.4-.4 2-.7a2.5 2.5 0 0 0 1.4-.85c.3-.3.6-.6.8-1.05a1.4 1.4 0 0 0 .3-1.1ZM14.7 19.3c.7.45 1.3.8 2 1.15.5.2 1.1.35 1.6.4c.7.1 1.3-.06 1.9-.3-1.3-.8-2.6-1.5-3.8-2.3Zm-2.6-.8c-1.35.8-2.6 1.5-3.85 2.3-.6.4-1.2.7-1.7 1-1.3.65-2.7 1.1-4.1 1.5a.7.7 0 0 1-.8-.5.7.7 0 0 1-.1-.3c.1-.2.2-.4.35-.6.5-1 1-2 1.5-3s1-2 1.5-3c.4-.7.8-1.4 1.2-2.1.2-.35.4-.7.6-1.05.3-.5.6-1 1-1.5.2-.2.4-.4.5-.6a1.1 1.1 0 0 1 .45-.25c.2-.04.4.03.6.1c.15.1.3.2.4.35.2.2.3.4.4.6.4.7.7 1.4 1 2.1.3.7.6 1.4.8 2.1.2.8.5 1.5.7 2.3.2.7.4 1.5.6 2.2.2.7.4 1.4.6 2.1a1.2 1.2 0 0 1 .2.7c-.1.2-.2.4-.3.5-1.5.8-3 1.6-4.5 2.4-.4.2-.8.3-1.2.5-.5.1-1 .2-1.5.2a1.7 1.7 0 0 1-1.3-.5c-.3-.2-.5-.4-.7-.7-.4-.7-.8-1.5-1.2-2.2-.4-.8-.7-1.6-1.1-2.4-.3-.8-.7-1.6-1-2.4-.3-.8-.6-1.6-.9-2.4-.2-.6-.5-1.2-.7-1.8a.7.7 0 0 0-.2-.3c-.05-.1-.1-.2-.17-.35-.2-.3-.4-.5-.6-.7a.7.7 0 0 0-.7-.1c-.4.2-.7.4-1.1.6a1.3 1.3 0 0 0-.8.8c-.3.4-.6.8-.8 1.3-.2.4-.4.9-.5 1.3a.7.7 0 0 0 .1.5c.1.2.2.4.4.5.8.4 1.7.7 2.6 1.1 1.7.7 3.5 1.4 5.3 2.1.9.3 1.9.5 2.8.7.9.15 1.8.2 2.7.2.9-.06 1.8-.1 2.6-.3.9-.2 1.7-.4 2.5-.7.8-.3 1.6-.6 2.3-.9.7-.3 1.4-.6 2-.9.6-.3 1.2-.6 1.8-.9.4-.2.8-.4 1.2-.5.1-.06.2-.1.3-.15a.7.7 0 0 0 .3-.5.7.7 0 0 0-.1-.6c-.2-.2-.4-.3-.7-.4-.8-.4-1.6-.7-2.4-1-1.6-.6-3.3-1.2-4.9-1.7-.9-.3-1.9-.5-2.8-.7-.9-.1-1.9-.2-2.8-.1Z"/></svg>
+                        <span>Apple Pay</span>
+                    </label>
+                </div>
+                <!-- Google Pay option -->
+                <div>
+                    <input type="radio" id="google-pay" name="payment-method" value="Google Pay" class="hidden">
+                    <label for="google-pay" class="payment-method-label">
+                        <svg class="icon google-pay-icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm-4.5-5.5h9v-1h-9v1Z"/></svg>
+                        <span>Google Pay</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Credit card specific fields, initially shown as Credit Card is the default selected option -->
+            <div id="credit-card-fields" class="space-y-4 mb-6">
+                <div>
+                    <label for="card-number" class="block text-sm font-medium text-gray-400 mb-1">Card Number</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9101 1121" class="input-field" maxlength="19" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="expiry" class="block text-sm font-medium text-gray-400 mb-1">Expiration Date</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" class="input-field" maxlength="5" required>
+                    </div>
+                    <div>
+                        <label for="cvv" class="block text-sm font-medium text-gray-400 mb-1">CVV</label>
+                        <input type="password" id="cvv" placeholder="123" class="input-field" maxlength="3" required>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="purchase-button">Purchase Now</button>
+        </form>
     </div>
-    <div class="socials">
-      <a href="https://www.tiktok.com/@crazy_00058"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/share/167B2n6UFJ/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://discord.gg/Vyp7hqnR"><i class="fab fa-discord"></i></a>
+
+    <!-- Modal HTML structure -->
+    <div id="payment-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <!-- Processing State -->
+            <div id="processing-state" class="flex flex-col items-center justify-center space-y-4">
+                <div class="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-xl font-medium text-white">Payment Processing...</p>
+                <p class="text-sm text-gray-400">Please wait, do not close this window.</p>
+            </div>
+            
+            <!-- Success State -->
+            <div id="success-state" class="flex flex-col items-center justify-center space-y-4 hidden">
+                <svg class="w-24 h-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-2xl font-bold text-white">Purchase Successful!</p>
+                <p class="text-base text-gray-300">A code has been sent to your Discord. Please check Discord.</p>
+            </div>
+        </div>
     </div>
-    <div class="slider">
-      <div class="slides">
-        <img class="slide-img" src="IMG_7461.jpeg" alt="Yêu thích 1">
-        <img class="slide-img" src="IMG_7462.jpeg" alt="Yêu thích 2">
-        <img class="slide-img" src="IMG_7463.jpeg" alt="Yêu thích 3">
-        <img class="slide-img" src="IMG_7464.jpeg" alt="Yêu thích 4">
-        <img class="slide-img" src="IMG_7465.jpeg" alt="Yêu thích 5">
-      </div>
-      <button class="prev">&#10094;</button>
-      <button class="next">&#10095;</button>
-    </div>
-  </div>
 
-  <audio id="bgm" src="nhac.mp3" autoplay loop muted></audio>
-  <button id="music-control">🔇</button>
-  <div class="waveform">
-    <div style="animation-delay:0s;"></div>
-    <div style="animation-delay:0.1s;"></div>
-    <div style="animation-delay:0.2s;"></div>
-    <div style="animation-delay:0.3s;"></div>
-    <div style="animation-delay:0.4s;"></div>
-    <div style="animation-delay:0.5s;"></div>
-    <div style="animation-delay:0.6s;"></div>
-    <div style="animation-delay:0.7s;"></div>
-    <div style="animation-delay:0.8s;"></div>
-    <div style="animation-delay:0.9s;"></div>
-  </div>
+    <script>
+        // Get the form element
+        const purchaseForm = document.getElementById('purchase-form');
+        // Get the payment method radio buttons
+        const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+        // Get the credit card fields container
+        const creditCardFields = document.getElementById('credit-card-fields');
+        // Get the modal elements
+        const paymentModal = document.getElementById('payment-modal');
+        const processingState = document.getElementById('processing-state');
+        const successState = document.getElementById('success-state');
 
-  <script>
-    // tạo mưa
-    const rainContainer = document.querySelector('.rain');
-    for (let i = 0; i < 80; i++) {
-      const drop = document.createElement('div');
-      drop.style.left = Math.random()*100 + 'vw';
-      drop.style.animationDuration = 0.5 + Math.random()*0.5 + 's';
-      drop.style.animationDelay = Math.random()*2 + 's';
-      rainContainer.appendChild(drop);
-    }
+        // Function to toggle the visibility of the credit card fields
+        function toggleCardFields() {
+            // Check if the "Credit Card" radio button is selected
+            const isCreditCardSelected = document.getElementById('credit-card').checked;
+            // Show or hide the credit card fields based on the selection
+            if (isCreditCardSelected) {
+                creditCardFields.classList.remove('hidden');
+            } else {
+                creditCardFields.classList.add('hidden');
+            }
+        }
 
-    // slider
-    const slides = document.querySelector('.slides');
-    const total = slides.children.length;
-    let index = 0;
-    document.querySelector('.prev').onclick = () => { index=(index-1+total)%total; slides.style.transform=`translateX(-${index*100}%)`; };
-    document.querySelector('.next').onclick = () => { index=(index+1)%total; slides.style.transform=`translateX(-${index*100}%)`; };
+        // Add event listeners to each payment method radio button to handle changes
+        paymentMethods.forEach(radio => {
+            radio.addEventListener('change', toggleCardFields);
+        });
 
-    // music control
-    const btn = document.getElementById('music-control');
-    const audio = document.getElementById('bgm');
-    btn.onclick = () => { audio.muted=!audio.muted; btn.textContent=audio.muted?'🔇':'🔊'; };
-  </script>
+        // Add a submit event listener to the form
+        purchaseForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent the form from actually submitting
+
+            // Get the Discord ID from the input field
+            const discordId = document.getElementById('discord-id').value;
+
+            // Simple validation to ensure Discord ID is not empty
+            if (!discordId) {
+                alert('Please enter your Discord ID.');
+                return;
+            }
+            
+            // Show the payment modal and the processing state
+            paymentModal.classList.remove('hidden');
+            processingState.classList.remove('hidden');
+            successState.classList.add('hidden');
+
+            // Simulate a 5-second payment processing delay
+            setTimeout(() => {
+                // Hide the processing state
+                processingState.classList.add('hidden');
+                // Show the success state
+                successState.classList.remove('hidden');
+            }, 5000); // 5000 milliseconds = 5 seconds
+        });
+
+        // Initial call to set the correct visibility for the credit card fields
+        toggleCardFields();
+    </script>
 </body>
 </html>
